@@ -1,0 +1,50 @@
+extends layout
+
+append scripts
+	link(rel="stylesheet", href="/shop.css")
+	link(href="../mobiscroll.custom-2.4.4.min.css", rel="stylesheet", type="text/css")
+	script(src="../javascript/mobiscroll.custom-2.4.4.min.js", type="text/javascript")
+	script(src="../javascript/shop_spinner.js", type="text/javascript")
+
+block header
+	h1 #{shop.name}
+	a(href="/logout", class="ui-btn-right", rel="external") Logout
+
+block content
+	#main
+		
+
+		#info
+			.divider
+				.innerDivider
+			#delivery
+				.center
+					form(name="createForm", action="/delivery", method="post", data-ajax="false")
+						lable(class="label", style="font-size:25px; padding-left:0px") Request Delivery
+						input(type="text", name="address", id="address", value="", placeholder="Address")
+						#times
+							.time
+								lable(class="label") Delivery Time
+								input(name="deliveryTime", id="delivery_scroller")
+							.time2
+								lable(class="label") Pickup Time
+								input(name="pickupTime", id="pickup_scroller")
+						input(type="submit", name="request", id="request", value="", value="Submit Request", data-theme="b")
+
+		
+
+		#deliveryList
+			.divider
+					.innerDivider
+			mixin listItem(address, id, bids)
+				div(data-role="collapsible", class="order", data-theme="b", data-collapsed-icon="arrow-d", data-inset="true", data-expanded-icon="arrow-u")
+					h4 #{address}
+					ul(data-role="listview", data-theme="a", data-divider-theme="a", data-inset="true")
+						each bid in bids
+							li
+								a(href="/bid/#{bid._id}", data-transition="slide") #{bid.driverName}: $#{bid.bid}
+
+			each delivery in deliveries
+				+listItem(delivery.address, delivery._id, delivery.bids)
+
+block footer
