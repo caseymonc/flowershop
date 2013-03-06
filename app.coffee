@@ -35,7 +35,7 @@ DeliveryController = new DeliveryControl Delivery, FlowerShop, User, Driver, Eve
 
 mongomate = require('mongomate')('mongodb://localhost')
 
-PORT = 443
+PORT = 3000
 exports.createServer = ->
 	privateKey = fs.readFileSync('./cert/server.key').toString();
 	certificate = fs.readFileSync('./cert/server.crt').toString(); 
@@ -98,4 +98,4 @@ exports.createServer = ->
 
 if module == require.main
 	app = exports.createServer()
-	app.listen 80
+	app.listen 3080
