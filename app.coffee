@@ -91,6 +91,12 @@ exports.createServer = ->
 	EventEmitter.on "rfq:bid_available", (body)=>
 		DeliveryController.addBid body
 
+	EventEmitter.on 'rfq:driver_ready', (body)=>
+		DriverController.registerDriver body
+
+	EventEmitter.on 'rfq:driver_done', (body)=>
+		DriverController.unRegisterDriver body
+
 
 
 	# final return of app object

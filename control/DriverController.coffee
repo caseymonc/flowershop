@@ -2,17 +2,12 @@ request = require "request"
 
 module.exports = (User, Driver) =>
 	
-	registerUri: (req, res)=>
-		Account.findById req.params.user_id, (err, user)=>
-			user.uri = req.body.uri
-			user.save (err)=>
-				return res.redirect '/profile/' + req.params.user_id
+	registerUri: (body)=>
+		Driver driver = new Driver {uri: body.uri}
+		driver.save
 
-	unregisterUri: (req, res)=>
-		Account.findById req.params.user_id, (err, user)=>
-			user.uri = undefined
-			user.save (err)=>
-				return res.redirect '/profile/' + req.params.user_id
+	unregisterUri: (body)=>
+		Driver.unRegisterDriver body.uri
 
 
 

@@ -5,12 +5,27 @@ Schema = mongoose.Schema
 module.exports = (db) ->
 
   DriverSchema = new Schema {
-    uri: String
+    uri: { type: String, unique: true }
   }
 
 
   DriverSchema.statics.getAllRegisteredDrivers = (cb) ->
-    @find({uri: {$ne: null}}).exec cb
+    @find().exec cb
+
+  DriverSchema.statics.registerDriver = (uri, cb) ->
+    @find({uri: uri}).exec (err, driver)=>
+    	return cb err if err?
+    	return cb {"error", "Already Exists"} if driver?
+
+    	driverDate = {uri: uri}
+    	Driver driver = new Driver driverData
+    	driver.save (err)=>
+    		return cb err if err?
+    		cb null, driver
+
+
+  DriverSchema.statics.unRegisterDriver = (uri, cb) ->
+    @remove({uri: uri}).exec cb
 
 
 
