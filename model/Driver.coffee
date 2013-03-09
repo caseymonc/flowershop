@@ -19,7 +19,7 @@ module.exports = (db) ->
       #console.log {"error", "Already Exists"} if driver?
 			#return cb {"error", "Already Exists"} if driver?
 
-			driverDate = {uri: uri}
+			driverData = {uri: uri}
 			Driver driver = new Driver driverData
 			driver.save (err)=>
 				return cb err if err?
