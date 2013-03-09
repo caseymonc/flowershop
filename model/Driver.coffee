@@ -17,7 +17,7 @@ module.exports = (db) ->
 		@find({uri: uri}).exec (err, driver)=>
 			#return cb err if err?
       #console.log {"error", "Already Exists"} if driver?
-			#return cb {"error", "Already Exists"} if driver?
+			return cb {"error", "Already Exists"} if driver?
 
 			driverData = {uri: uri}
 			Driver driver = new Driver driverData
