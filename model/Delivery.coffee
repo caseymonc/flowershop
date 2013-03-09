@@ -5,13 +5,13 @@ ObjectId = require('mongoose').Types.ObjectId
 # Delivery Model
 module.exports = (db) ->
 
-	DeliverySchema = new Schema {
+	DeliverySchema = new Schema({
 		flowerShopId: String,
 		address: String,
 		pickupTime: Date,
 		deliveryTime: Date,
 		bids: [{driverUri: String, bid: Number, driverName: String}]
-	}
+	}, { collection : 'deliveries' })
 
 	DeliverySchema.statics.get = (flowerShopId, cb)->
 		@find({"flowerShopId": flowerShopId}).exec cb

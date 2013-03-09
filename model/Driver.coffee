@@ -4,9 +4,9 @@ Schema = mongoose.Schema
 # User Model
 module.exports = (db) ->
 
-	DriverSchema = new Schema {
+	DriverSchema = new Schema({
 		uri: { type: String, unique: true }
-	}
+	}, { collection : 'drivers' })
 
 
 	DriverSchema.statics.getAllRegisteredDrivers = (cb) ->

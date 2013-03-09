@@ -6,11 +6,11 @@ ObjectId = require('mongoose').Types.ObjectId
 # FlowerShop Model
 module.exports = (db) ->
 
-  FlowerShopSchema = new Schema {
+  FlowerShopSchema = new Schema({
     name: String,
     phone: String,
     address: String
-  }
+  }, { collection : 'flowershops' })
 
   # Get a shop by id
   FlowerShopSchema.statics.findOrCreate = (data, cb) ->
