@@ -2,11 +2,11 @@ request = require "request"
 
 module.exports = (User, Driver) =>
 	
-	registerUri: (body)=>
-		Driver driver = new Driver {uri: body.uri}
-		driver.save
+	registerDriver: (body)=>
+		Driver.registerDriver body.uri, (err, driver)=>
 
-	unregisterUri: (body)=>
+
+	unRegisterDriver: (body)=>
 		Driver.unRegisterDriver body.uri
 
 
