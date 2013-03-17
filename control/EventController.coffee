@@ -15,6 +15,8 @@ module.exports = (EventEmitter) =>
 			url: url
 			json: data
 
+		console.log "Sending Event: " + domain + ":" + name + "\nTo: " + url + "\nWith data:\n" + data + "\n\n\n"
+
 		request.post options, (e, r, body)=>
 			return;
 

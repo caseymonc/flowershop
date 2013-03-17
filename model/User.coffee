@@ -9,7 +9,7 @@ module.exports = (db) ->
     password: String,
     foursquareId: String,
     flowershopId: String
-  }, { collection : 'drivers' })
+  }, { collection : 'shop_users' })
 
 
   # Get All Users for a group

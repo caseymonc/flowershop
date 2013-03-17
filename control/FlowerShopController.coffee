@@ -1,4 +1,5 @@
 request = require "request"
+geocoder = require "geocoder"
 
 module.exports = (FlowerShop, User, Delivery) =>
 
@@ -19,6 +20,7 @@ module.exports = (FlowerShop, User, Delivery) =>
 		return res.redirect "/" unless (req.body.username? and req.body.password)
 		data = {username: req.body.username, password: req.body.password}
 		User.findWithUsername data, (err, user)=>
+			console.log "Queried User"
 			return res.redirect '/' if not user or err?
 			req.session.user = user
 			console.log 'User: ' + JSON.stringify user
@@ -35,18 +37,22 @@ module.exports = (FlowerShop, User, Delivery) =>
 		if not req.body.username? or 
 		not req.body.password?
 			return res.redirect "/"
-		data = {name: req.body.name, phone: req.body.phone, address: req.body.address}
-		FlowerShop.findOrCreate data, (err, shop, created)=>
-			console.log err if err?
-			req.session.shop = shop
-			console.log {error: "Not Created 1"} unless created
-			return res.redirect "/" unless created
-			data = {username: req.body.username, password: req.body.password}
-			data.shop = shop
-			data.username
-			User.findOrCreateWithShop data, (err, user, created)=>
-				console.log {error: "Not Created 2"} unless created
+		geocoder.geocode req.body.address, (err, data)=>
+			return res.redirect "/" if err
+			return res.redirect "/" unless data?.results[0]?.geometry?.location
+			location = data.results[0].geometry.location
+			data = {name: req.body.name, phone: req.body.phone, address: req.body.address, pos: [location.lng, location.lat]}
+			FlowerShop.findOrCreate data, (err, shop, created)=>
+				console.log err if err?
+				req.session.shop = shop
+				console.log {error: "Not Created 1"} unless created
 				return res.redirect "/" unless created
-				return res.redirect '/shop/' + shop._id
+				data = {username: req.body.username, password: req.body.password}
+				data.shop = shop
+				data.username
+				User.findOrCreateWithShop data, (err, user, created)=>
+					console.log {error: "Not Created 2"} unless created
+					return res.redirect "/" unless created
+					return res.redirect '/shop/' + shop._id
 		
 

@@ -9,7 +9,8 @@ module.exports = (db) ->
   FlowerShopSchema = new Schema({
     name: String,
     phone: String,
-    address: String
+    address: String,
+    pos: {type: [Number], index: '2d'}
   }, { collection : 'flowershops' })
 
   # Get a shop by id

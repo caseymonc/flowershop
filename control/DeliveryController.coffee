@@ -6,6 +6,8 @@ module.exports = (Delivery, FlowerShop, User, Driver, EventController) =>
 		Delivery.create data, (err, delivery)=>
 			data.shopAddress = req.session.shop.address
 			data.delivery_id = delivery._id
+			data.lat = req.session.shop.pos[1];
+			data.lon = req.session.shop.pos[0];
 			Driver.getAllRegisteredDrivers (err, drivers)=>
 				return res.redirect '/shop/#{req.session.shop._id/test}' if err?
 				EventController.sendExternalEvent driver.uri, "rfq", "delivery_ready", data for driver in drivers

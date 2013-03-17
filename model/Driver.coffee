@@ -16,7 +16,7 @@ module.exports = (db) ->
 		console.log "Uri: " + uri
 		@find({uri: uri}).exec (err, driver)=>
 			#return cb err if err?
-      #console.log {"error", "Already Exists"} if driver?
+      console.log driver if driver?
 			return cb {"error", "Already Exists"} if driver?
 
 			driverData = {uri: uri}
