@@ -19,7 +19,7 @@ block content
 				.innerDivider
 			#delivery
 				.center
-					form(name="createForm", action="/delivery", method="post", data-ajax="false")
+					form(name="createForm", action="/shop/#{shop._id}/delivery", method="post", data-ajax="false")
 						lable(class="label", style="font-size:25px; padding-left:0px") Request Delivery
 						input(type="text", name="address", id="address", value="", placeholder="Address")
 						#times

@@ -1,19 +1,20 @@
 
 module.exports = (Delivery, FlowerShop, User, Driver, EventController) =>
 	createDelivery: (req, res)=>
-		data = req.body
-		data.flowerShopId = "#{req.session.shop._id}"
-		Delivery.create data, (err, delivery)=>
-			data.shopAddress = req.session.shop.address
-			data.delivery_id = delivery._id
-			data.lat = req.session.shop.pos[1];
-			data.lon = req.session.shop.pos[0];
-			data.uri = req.protocol + "://" + req.get('host') + "/event"
-			data.radius = 10
-			Driver.getAllRegisteredDrivers (err, drivers)=>
-				return res.redirect '/shop/#{req.session.shop._id/test}' if err?
-				EventController.sendExternalEvent driver.uri, "rfq", "delivery_ready", data for driver in drivers
-				res.redirect "/shop/#{req.session.shop._id}"
+		FlowerShop.findById req.params.flowershopId, (err, shop)=>
+			data = req.body
+			data.flowerShopId = "#{shop._id}"
+			Delivery.create data, (err, delivery)=>
+				data.shopAddress = shop.address
+				data.delivery_id = delivery._id
+				data.lat = shop.pos[1];
+				data.lon = shop.pos[0];
+				data.uri = req.protocol + "://" + req.get('host') + "/event"
+				data.radius = 10
+				Driver.getAllRegisteredDrivers (err, drivers)=>
+					return res.redirect '/shop/#{req.session.shop._id/test}' if err?
+					EventController.sendExternalEvent driver.uri, "rfq", "delivery_ready", data for driver in drivers
+					res.redirect "/shop/#{req.session.shop._id}"
 
 	addBid: (body)=>
 		if not body?.bid? or not body?.driverUri? or not body?.driverName? or not body?.delivery_id?
