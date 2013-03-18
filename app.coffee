@@ -77,7 +77,7 @@ exports.createServer = ->
 	app.post "/login/flowershop", (req, res)->
 		FlowerShopController.login req, res
 
-	app.post "shop/:flowershopId/delivery", (req, res)->
+	app.post "/shop/:flowershopId/delivery", (req, res)->
 		DeliveryController.createDelivery req, res
 
 	app.get "/logout", (req, res)->
