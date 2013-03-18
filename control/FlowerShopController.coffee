@@ -10,9 +10,13 @@ module.exports = (FlowerShop, User, Delivery) =>
 
 	logout: (req, res)=>
 		console.log 'Endpoint: Logout'
-		if req.session?.user?
-			delete req.session.user
-		req.session.destroy()
+		if req.session?.shop_user?
+			delete req.session.shop_user
+
+
+		if req.session?.shop?
+			delete req.session.shop
+		#req.session.destroy()
 		return res.redirect '/'
 
 	login: (req, res)=>
@@ -20,9 +24,9 @@ module.exports = (FlowerShop, User, Delivery) =>
 		return res.redirect "/" unless (req.body.username? and req.body.password)
 		data = {username: req.body.username, password: req.body.password}
 		User.findWithUsername data, (err, user)=>
-			console.log "Queried User"
+
 			return res.redirect '/' if not user or err?
-			req.session.user = user
+			req.session.shop_user = user
 			console.log 'User: ' + JSON.stringify user
 			if not user.flowershopId?
 				return res.redirect '/'
