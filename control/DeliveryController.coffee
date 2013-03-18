@@ -8,7 +8,7 @@ module.exports = (Delivery, FlowerShop, User, Driver, EventController) =>
 			data.delivery_id = delivery._id
 			data.lat = req.session.shop.pos[1];
 			data.lon = req.session.shop.pos[0];
-			data.uri = req.protocol + "://" + req.get('host') + "/delivery/" + delivery._id
+			data.uri = req.protocol + "://" + req.get('host') + "/event"
 			data.radius = 10
 			Driver.getAllRegisteredDrivers (err, drivers)=>
 				return res.redirect '/shop/#{req.session.shop._id/test}' if err?
