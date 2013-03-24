@@ -44,7 +44,7 @@ block content
 							- if (bid.accepted)
 								li
 									a(href="", data-transition="slide") #{bid.driverName}: $#{bid.bid}
-									a(href="/delivery/#{id}/pickup") Bid Picked Up
+									a(href="/delivery/#{id}/pickup", data-icon="plus") Bid Picked Up
 							- else
 								li
 									a(href="", data-transition="slide") #{bid.driverName}: $#{bid.bid}
