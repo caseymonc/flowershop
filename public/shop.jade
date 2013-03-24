@@ -41,8 +41,11 @@ block content
 					h4 #{address}
 					ul(data-role="listview", data-theme="a", data-divider-theme="a", data-inset="true")
 						each bid in bids
-							li
-								a(href="/bid/#{bid._id}", data-transition="slide") #{bid.driverName}: $#{bid.bid}
+							- if (bid.accepted)
+							- else
+								li
+									a(href="", data-transition="slide") #{bid.driverName}: $#{bid.bid}
+									a(href="/bid/#{bid._id}/accept") Accept Bid
 
 			each delivery in deliveries
 				+listItem(delivery.address, delivery._id, delivery.bids)

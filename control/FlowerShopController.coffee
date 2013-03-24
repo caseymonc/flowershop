@@ -13,7 +13,6 @@ module.exports = (FlowerShop, User, Delivery) =>
 		if req.session?.shop_user?
 			delete req.session.shop_user
 
-
 		if req.session?.shop?
 			delete req.session.shop
 		#req.session.destroy()
