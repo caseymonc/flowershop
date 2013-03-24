@@ -70,6 +70,12 @@ exports.createServer = ->
 
 	app.get '/shop/:flowershopId', (req, res)->
 		FlowerShopController.renderShopPage req, res
+
+	app.get '/delivery/:delivery_id/bid/:bid_id/accept', (req, res)->
+		DeliveryController.acceptBid req, res
+
+	app.get '/delivery/:delivery_id/pickup', (req, res)->
+		DeliveryController.pickedUp req, res
 			 
 	app.post "/create/flowershop", (req, res)->
 		FlowerShopController.create req, res

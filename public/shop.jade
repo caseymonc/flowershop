@@ -39,16 +39,16 @@ block content
 			mixin listItem(address, id, bids)
 				div(data-role="collapsible", class="order", data-theme="b", data-collapsed-icon="arrow-d", data-inset="true", data-expanded-icon="arrow-u")
 					h4 #{address}
-					ul(data-role="listview", data-theme="a", data-divider-theme="a", data-inset="true", data-split-icon="plus", data-split-theme="b")
+					ul(data-role="listview", data-theme="a", data-divider-theme="a", data-inset="true", data-split-icon="check", data-split-theme="b")
 						each bid in bids
 							- if (bid.accepted)
 								li
 									a(href="", data-transition="slide") #{bid.driverName}: $#{bid.bid}
-									a(href="/bid/#{bid._id}/accept") Bid Picked Up
+									a(href="/delivery/#{id}/pickup") Bid Picked Up
 							- else
 								li
 									a(href="", data-transition="slide") #{bid.driverName}: $#{bid.bid}
-									a(href="/bid/#{bid._id}/accept") Accept Bid
+									a(href="/delivery/#{id}/bid/#{bid._id}/accept") Accept Bid
 
 			each delivery in deliveries
 				+listItem(delivery.address, delivery._id, delivery.bids)

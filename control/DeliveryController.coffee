@@ -30,3 +30,16 @@ module.exports = (Delivery, FlowerShop, User, Driver, EventController) =>
 		Delivery.addBid delivery_id, data, (err, delivery)=>
 			return console.log err if err
 			return
+
+	acceptBid: (req, res)=>
+		bid_id = req.params.bid_id
+		delivery_id = req.params.delivery_id
+		Delivery.acceptBid delivery_id, bid_id, (err)=>
+			return res.redirect "/shop/#{req.session.shop._id}" if err
+			res.redirect "/shop/#{req.session.shop._id}"
+
+	pickedUp: (req, res)=>
+		delivery_id = req.params.delivery_id
+		Delivery.pickedUp delivery_id, bid_id, (err)=>
+			return res.redirect "/shop/#{req.session.shop._id}" if err
+			res.redirect "/shop/#{req.session.shop._id}"
