@@ -41,7 +41,7 @@ block content
 					h4 #{address}
 					ul(data-role="listview", data-theme="a", data-divider-theme="a", data-inset="true", data-split-icon="check", data-split-theme="b")
 						each bid in bids
-							- if (bid.accepted)
+							- if (true)
 								li
 									a(href="", data-transition="slide") #{bid.driverName}: $#{bid.bid}
 									a(href="/delivery/#{id}/pickup") Bid Picked Up
