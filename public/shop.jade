@@ -39,7 +39,7 @@ block content
 			mixin listItem(address, id, bids)
 				div(data-role="collapsible", class="order", data-theme="b", data-collapsed-icon="arrow-d", data-inset="true", data-expanded-icon="arrow-u")
 					h4 #{address}
-					ul(data-role="listview", data-theme="a", data-divider-theme="a", data-inset="true")
+					ul(data-role="listview", data-theme="a", data-divider-theme="a", data-inset="true", data-split-icon="plus", data-split-theme="b")
 						each bid in bids
 							- if (bid.accepted)
 								li
