@@ -42,6 +42,9 @@ block content
 					ul(data-role="listview", data-theme="a", data-divider-theme="a", data-inset="true")
 						each bid in bids
 							- if (bid.accepted)
+								li
+									a(href="", data-transition="slide") #{bid.driverName}: $#{bid.bid}
+									a(href="/bid/#{bid._id}/accept") Bid Picked Up
 							- else
 								li
 									a(href="", data-transition="slide") #{bid.driverName}: $#{bid.bid}
