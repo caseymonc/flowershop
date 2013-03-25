@@ -37,12 +37,34 @@ module.exports = (Delivery, FlowerShop, User, Driver, EventController) =>
 		delivery_id = req.params.delivery_id
 		Delivery.acceptBid delivery_id, bid_id, (err, delivery)=>
 			return res.redirect "/shop/#{req.session.shop._id}" if err
-			EventController.sendExternalEvent "http://localhost:3040/event", "rfq", "bid_awarded", delivery
+			data = {}
+			EventController.sendExternalEvent "http://localhost:3040/event", "rfq", "bid_awarded", normalize delivery
 			res.redirect "/shop/#{req.session.shop._id}"
 
 	pickedUp: (req, res)=>
 		delivery_id = req.params.delivery_id
 		Delivery.pickedUp delivery_id, bid_id, (err, delivery)=>
 			return res.redirect "/shop/#{req.session.shop._id}" if err
-			EventController.sendExternalEvent "http://localhost:3040/event", "delivery", "picked_up", delivery
+			EventController.sendExternalEvent "http://localhost:3040/event", "delivery", "picked_up", normalize delivery
 			res.redirect "/shop/#{req.session.shop._id}"
+
+
+base = ()-> [
+  'delivery_id'
+  'flowerShopId'
+  'address'
+  'pickupTime'
+  'deliveryTime'
+  'bids'
+  'pickedUp'
+]
+
+normalize = (delivery) ->
+  result = {}
+  fields = base()
+  for key in fields
+    if key is 'delivery_id' and delivery._id?
+      result[key] = delivery._id
+    else if delivery[key]?
+      result[key] = delivery[key]
+  return result
