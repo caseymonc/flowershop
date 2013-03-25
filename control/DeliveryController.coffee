@@ -43,7 +43,7 @@ module.exports = (Delivery, FlowerShop, User, Driver, EventController) =>
 
 	pickedUp: (req, res)=>
 		delivery_id = req.params.delivery_id
-		Delivery.pickedUp delivery_id, bid_id, (err, delivery)=>
+		Delivery.pickedUp delivery_id, (err, delivery)=>
 			return res.redirect "/shop/#{req.session.shop._id}" if err
 			EventController.sendExternalEvent "http://localhost:3040/event", "delivery", "picked_up", normalize delivery
 			res.redirect "/shop/#{req.session.shop._id}"
