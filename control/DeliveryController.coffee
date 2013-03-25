@@ -13,7 +13,8 @@ module.exports = (Delivery, FlowerShop, User, Driver, EventController) =>
 				data.radius = 10
 				Driver.getAllRegisteredDrivers (err, drivers)=>
 					return res.redirect '/shop/#{req.session.shop._id/test}' if err?
-					EventController.sendExternalEvent driver.uri, "rfq", "delivery_ready", data for driver in drivers
+					#EventController.sendExternalEvent driver.uri, "rfq", "delivery_ready", data for driver in drivers
+					EventController.sendExternalEvent "http://localhost:3040/event", "rfq", "delivery_ready", data
 					res.redirect "/shop/#{req.session.shop._id}"
 
 	addBid: (body)=>
@@ -34,12 +35,14 @@ module.exports = (Delivery, FlowerShop, User, Driver, EventController) =>
 	acceptBid: (req, res)=>
 		bid_id = req.params.bid_id
 		delivery_id = req.params.delivery_id
-		Delivery.acceptBid delivery_id, bid_id, (err)=>
+		Delivery.acceptBid delivery_id, bid_id, (err, delivery)=>
 			return res.redirect "/shop/#{req.session.shop._id}" if err
+			EventController.sendExternalEvent "http://localhost:3040/event", "rfq", "bid_awarded", delivery
 			res.redirect "/shop/#{req.session.shop._id}"
 
 	pickedUp: (req, res)=>
 		delivery_id = req.params.delivery_id
-		Delivery.pickedUp delivery_id, bid_id, (err)=>
+		Delivery.pickedUp delivery_id, bid_id, (err, delivery)=>
 			return res.redirect "/shop/#{req.session.shop._id}" if err
+			EventController.sendExternalEvent "http://localhost:3040/event", "delivery", "picked_up", delivery
 			res.redirect "/shop/#{req.session.shop._id}"

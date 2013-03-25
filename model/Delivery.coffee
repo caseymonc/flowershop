@@ -57,7 +57,8 @@ module.exports = (db) ->
 
 	DeliverySchema.statics.pickedUp = (delivery_id, cb)->
 		delivery_id = new ObjectId(delivery_id)
-		@update({"_id": delivery_id}, {pickedUp: new Date()}).exec cb
+		@update({"_id": delivery_id}, {pickedUp: new Date()}).exec (err)=>
+			@findOne({"_id": delivery_id}).exec cb
 
 
 	Delivery = db.model "Delivery", DeliverySchema
