@@ -35,15 +35,10 @@ DeliveryController = new DeliveryControl Delivery, FlowerShop, User, Driver, Eve
 
 mongomate = require('mongomate')('mongodb://localhost')
 
-PORT = 3000
+PORT = 3080
 exports.createServer = ->
-	privateKey = fs.readFileSync('./cert/server.key').toString();
-	certificate = fs.readFileSync('./cert/server.crt').toString(); 
 
-	app = express()
-
-	server = https.createServer({key: privateKey, cert: certificate}, app).listen PORT, ()->
-		console.log "Running Foursquare Service on port: " + PORT
+	app = express()		
 
 	app.configure ->
 		app.use(express.cookieParser())
@@ -110,4 +105,5 @@ exports.createServer = ->
 
 if module == require.main
 	app = exports.createServer()
-	app.listen 3080
+	app.listen PORT
+	console.log "Running Foursquare Service on port: " + PORT

@@ -48,7 +48,7 @@ module.exports = (db) ->
 			for bid in delivery.bids
 				if bid_id is "#{bid._id}"
 					acceptBid = bid
-			deliveryBids = [acceptBid]
+			delivery.bids = [acceptBid]
 			acceptBid.accepted = true
 
 			delivery.save (err)=>
