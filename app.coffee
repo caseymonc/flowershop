@@ -44,7 +44,7 @@ exports.createServer = ->
 		app.use(express.cookieParser())
 		app.use(express.bodyParser())
 		app.use(express.methodOverride())
-		app.use(express.session({ secret: 'keyboard cat' }))
+		app.use(express.session({ secret: 'flowershop' }))
 		app.use('/db', mongomate);
 		
 		app.set('view engine', 'jade')
