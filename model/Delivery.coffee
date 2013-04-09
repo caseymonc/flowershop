@@ -15,13 +15,13 @@ module.exports = (db) ->
 		delivered: Date
 	}, { collection : 'deliveries' })
 
-	DeliverySchema.statics.completeDelivery = ()->
+	DeliverySchema.statics.completeDelivery = (delivery_id, cb)->
 		delivery_id = new ObjectId(delivery_id)
 		@update({"_id": delivery_id}, {delivered: new Date()}).exec (err)=>
 			@findOne({"_id": delivery_id}).exec cb
 
 	DeliverySchema.statics.get = (flowerShopId, cb)->
-		@find({"flowerShopId": flowerShopId}).exec cb
+		@find({"flowerShopId": flowerShopId, "delivered" : {$ne: null}}).exec cb
 
 	DeliverySchema.statics.addBid = (delivery_id, data, cb)->
 		delivery_id = new ObjectId(delivery_id)
