@@ -98,6 +98,8 @@ exports.createServer = ->
 	EventEmitter.on 'rfq:driver_done', (body)=>
 		DriverController.unRegisterDriver body
 
+	EventEmitter.on 'delivery:complete', (body)=>
+		DeliveryController.deliveryComplete body
 
 
 	# final return of app object

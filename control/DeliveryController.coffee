@@ -48,6 +48,16 @@ module.exports = (Delivery, FlowerShop, User, Driver, EventController) =>
 			EventController.sendExternalEvent "http://localhost:3040/event", "delivery", "picked_up", normalize delivery
 			res.redirect "/shop/#{req.session.shop._id}"
 
+	deliveryCompleted: (body)=>
+		if not body?.delivery_id?
+			console.log "Wrong Params Sent: " + JSON.stringify body
+			return
+
+		delivery_id = body.delivery_id
+
+		Delivery.completeDelivery delivery_id, (err, delivery)=>
+			return console.log err if err
+			return
 
 base = ()-> [
   'delivery_id'
@@ -57,6 +67,7 @@ base = ()-> [
   'deliveryTime'
   'bids'
   'pickedUp'
+  'delivered'
 ]
 
 normalize = (delivery) ->

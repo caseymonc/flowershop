@@ -11,8 +11,14 @@ module.exports = (db) ->
 		pickupTime: Date,
 		deliveryTime: Date,
 		bids: [{driverUri: String, bid: Number, driverName: String, accepted: Boolean}],
-		pickedUp: Date
+		pickedUp: Date,
+		delivered: Date
 	}, { collection : 'deliveries' })
+
+	DeliverySchema.statics.completeDelivery = ()->
+		delivery_id = new ObjectId(delivery_id)
+		@update({"_id": delivery_id}, {delivered: new Date()}).exec (err)=>
+			@findOne({"_id": delivery_id}).exec cb
 
 	DeliverySchema.statics.get = (flowerShopId, cb)->
 		@find({"flowerShopId": flowerShopId}).exec cb
