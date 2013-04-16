@@ -21,7 +21,7 @@ module.exports = (db) ->
 			@findOne({"_id": delivery_id}).exec cb
 
 	DeliverySchema.statics.get = (flowerShopId, cb)->
-		@find({"flowerShopId": flowerShopId, "delivered" : {$ne: null}}).exec cb
+		@find({"flowerShopId": flowerShopId}).exec cb
 
 	DeliverySchema.statics.addBid = (delivery_id, data, cb)->
 		delivery_id = new ObjectId(delivery_id)

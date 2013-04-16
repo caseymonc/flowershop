@@ -6,6 +6,7 @@ module.exports = (FlowerShop, User, Delivery) =>
 	renderShopPage: (req, res)=>
 		FlowerShop.findById req.params.flowershopId, (err, shop)=>
 			Delivery.get req.params.flowershopId, (err, deliveries)=>
+				console.log deliveries
 				return res.render('shop', {shop: shop, title: shop.name, deliveries: deliveries})
 
 	logout: (req, res)=>
